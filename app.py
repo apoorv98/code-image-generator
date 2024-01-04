@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def code():
-    pass
+    context = {
+        "message": "Paste Your Python Code",
+    }
+    return render_template("code_input.html", **context)
