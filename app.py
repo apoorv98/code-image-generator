@@ -66,3 +66,10 @@ def save_style():
     if request.form.get("code") is not None:
         session["code"] = request.form.get("code")
     return redirect(url_for("style"))
+
+@app.route("/image", methods=["GET"])
+def image():
+    context = {
+        "message": "Done! 🎉",
+    }
+    return render_template("image.html", **context)
