@@ -21,7 +21,7 @@
         });
     });
 </script>
-<form>
+<form method="post" action="{{ url_for('save_style') }}">
     <div class="controls">
         <select name="style">
             {% for style_name in all_styles %}

@@ -22,6 +22,7 @@ app.secret_key = "2e9ac41b1e0b66a8d93d66400e2300c4b4c2953f"
 
 PLACEHOLDER_CODE = "print('Hello, World!')"
 DEFAULT_STYLE = "monokai"
+NO_CODE_FALLBACK = "# No Code Entered"
 
 @app.route("/", methods=["GET"])
 def code():
@@ -38,7 +39,7 @@ def code():
 
 @app.route("/save_code", methods=["POST"])
 def save_code():
-    session["code"] = request.form.get("code")
+    session["code"] = request.form.get("code") or NO_CODE_FALLBACK
     return redirect(url_for("code"))
 
 @app.route("/reset_session", methods=["POST"])
@@ -69,7 +70,7 @@ def save_style():
     if request.form.get("style") is not None:
         session["style"] = request.form.get("style")
     if request.form.get("code") is not None:
-        session["code"] = request.form.get("code")
+        session["code"] = request.form.get("code") or NO_CODE_FALLBACK
     return redirect(url_for("style"))
 
 @app.route("/image", methods=["GET"])
