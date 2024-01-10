@@ -14,6 +14,13 @@
         background-color: {{ style_bg_color }}
     }
 </style>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelector("select").addEventListener("change", () => {
+            document.querySelector("form").submit();
+        });
+    });
+</script>
 <form>
     <div class="controls">
         <select name="style">
