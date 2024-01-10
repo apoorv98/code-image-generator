@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import base64
+
 from flask import (
     Flask,
     redirect,
@@ -12,6 +14,8 @@ from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import Python3Lexer
 from pygments.styles import get_all_styles
+
+from utils import take_screenshot_from_url
 
 app = Flask(__name__)
 app.secret_key = "2e9ac41b1e0b66a8d93d66400e2300c4b4c2953f"
@@ -69,7 +73,15 @@ def save_style():
 
 @app.route("/image", methods=["GET"])
 def image():
+    session_data = {
+        "name": app.config["SESSION_COOKIE_NAME"],
+        "value": request.cookies.get(app.config["SESSION_COOKIE_NAME"]),
+        "url": request.host_url,
+    }
+    target_url = request.host_url + url_for("style")
+    image_bytes = take_screenshot_from_url(target_url, session_data)
     context = {
         "message": "Done! 🎉",
+        "image_b64": base64.b64encode(image_bytes).decode("utf-8"),
     }
     return render_template("image.html", **context)
