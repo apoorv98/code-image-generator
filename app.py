@@ -55,6 +55,7 @@ def style():
     context = {
         "message": "Select Your Style 🎨",
         "all_styles": list(get_all_styles()),
+        "style": session["style"],
         "style_definitions": formatter.get_style_defs(),
         "style_bg_color": formatter.style.background_color,
         "highlighted_code": highlight(
